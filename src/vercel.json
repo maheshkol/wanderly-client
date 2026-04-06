@@ -6,7 +6,3 @@
   "framework": "create-react-app"
 }
 '@ | Out-File -FilePath vercel.json -Encoding utf8
-
-git add vercel.json
-git commit -m "add vercel.json"
-git push
