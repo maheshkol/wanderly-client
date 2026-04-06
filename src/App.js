@@ -3,6 +3,8 @@ import WanderlyHome from './pages/WanderlyHome';
 import DestinationDetail from './pages/DestinationDetail';
 import TripPlanner from './pages/TripPlanner';
 import SearchAndBooking from './pages/SearchAndBooking';
+import { useEffect, useState } from "react";
+
 
 export default function App() {
   return (
