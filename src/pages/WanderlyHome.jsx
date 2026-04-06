@@ -1,3 +1,4 @@
+import API_BASE from '../config';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -354,7 +355,7 @@ export default function WanderlyHome() {
 
   // Load all cached destinations on mount
   useEffect(() => {
-    fetch("http://localhost:5000/destinations")
+    fetch(`${API_BASE}/destinations`)
       .then((res) => res.json())
       .then((data) => { setDestinations(data); setLoading(false); })
       .catch((err) => { console.error(err); setLoading(false); });
@@ -368,7 +369,7 @@ export default function WanderlyHome() {
     setSearchError("");
     setSearchResult(null);
     try {
-      const res = await fetch(`http://localhost:5000/destinations/search?q=${encodeURIComponent(q)}`);
+      const res = await fetch(`${API_BASE}/destinations/search?q=${encodeURIComponent(q)}`);
       const json = await res.json();
       if (!res.ok) {
         setSearchError(json.error || "Destination not found.");
@@ -525,3 +526,4 @@ export default function WanderlyHome() {
     </>
   );
 }
+

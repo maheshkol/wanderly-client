@@ -1,3 +1,4 @@
+import API_BASE from '../config';
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -335,7 +336,7 @@ export default function DestinationDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/destinations/${id}`)
+    fetch(`${API_BASE}/destinations/${id}`)
       .then(res => res.json())
       .then(data => {
         setDestination(data);
@@ -457,3 +458,4 @@ export default function DestinationDetail() {
     </>
   );
 }
+

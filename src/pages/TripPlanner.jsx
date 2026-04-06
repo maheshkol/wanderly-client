@@ -1,3 +1,4 @@
+import API_BASE from '../config';
 import { useState, useEffect } from "react";
 
 const styles = `
@@ -359,7 +360,7 @@ export default function TripPlanner() {
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/destinations")
+    fetch(`${API_BASE}/destinations`)
       .then(res => res.json())
       .then(data => {
         setDestinations(data);
@@ -472,3 +473,4 @@ export default function TripPlanner() {
     </>
   );
 }
+
