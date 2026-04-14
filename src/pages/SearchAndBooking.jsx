@@ -405,57 +405,95 @@ const styles = `
 
 function SearchResults({ onBook }) {
   const [destinations, setDestinations] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
 
-  useEffect(() => {
-    //fetch(`${API_BASE}/destinations`)
-   fetch(`${API.BASE}${API.DESTINATIONS}/search?q=${destinations}`)
-      .then(res => res.json())
+  const handleSearch = () => {
+    if (!searchVal.trim()) return;
+
+    setLoading(true);
+
+    fetch(`${API.BASE}${API.DESTINATIONS}/search?q=${searchVal}`)
+      .then(res => {
+        if (!res.ok) throw new Error("Search failed");
+        return res.json();
+      })
       .then(data => {
-        setDestinations(data);
+        console.log("SEARCH DATA:", data);
+
+        // Convert object → array
+        if (data.data) {
+          setDestinations([data.data]);
+        } else {
+          setDestinations([]);
+        }
+
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
+        setDestinations([]);
         setLoading(false);
       });
-  }, [destinations]);
+  };
 
   return (
     <div className="sb-search-page">
       <p className="sb-page-eyebrow">Explore the World</p>
       <h1 className="sb-page-title">All Destinations</h1>
 
-      <div className="sb-filter-bar">
-        {["All", "Beach", "Mountain", "City", "Heritage"].map((f, i) => (
-          <button key={f} className={`sb-filter-chip ${i === 0 ? "active" : ""}`}>
-            {f}
-          </button>
-        ))}
+      {/* ✅ SEARCH INPUT */}
+      <div style={{ marginBottom: "30px" }}>
+        <input
+          placeholder="Search destinations (e.g. Paris, Goa)"
+          value={searchVal}
+          onChange={(e) => setSearchVal(e.target.value)}
+          className="sb-input"
+        />
+
+        <button
+          onClick={handleSearch}
+          className="sb-book-btn"
+          style={{ marginTop: "10px" }}
+        >
+          Search
+        </button>
       </div>
 
       {loading ? (
         <div className="sb-loading">
-          <p className="sb-loading-text">Discovering destinations…</p>
+          <p className="sb-loading-text">Searching…</p>
         </div>
       ) : (
         <div className="sb-grid">
-          {destinations.map((d, i) => (
-            <div key={d._id} className="sb-dest-card">
-              <div className="sb-dest-card-idx">{String(i + 1).padStart(2, "0")}</div>
-              <h3 className="sb-dest-name">{d.name}</h3>
-              <p className="sb-dest-desc">{d.description}</p>
-              <div className="sb-dest-footer">
-                <div className="sb-dest-price">
-                  ₹{(d.price || 0).toLocaleString("en-IN")}
-                  <small>/ person</small>
+          {destinations.length === 0 ? (
+            <p>No destinations found</p>
+          ) : (
+            destinations.map((d, i) => (
+              <div key={d._id} className="sb-dest-card">
+                <div className="sb-dest-card-idx">
+                  {String(i + 1).padStart(2, "0")}
                 </div>
-                <button className="sb-book-btn" onClick={() => onBook(d)}>
-                  Book Now →
-                </button>
+
+                <h3 className="sb-dest-name">{d.name}</h3>
+                <p className="sb-dest-desc">{d.description}</p>
+
+                <div className="sb-dest-footer">
+                  <div className="sb-dest-price">
+                    ₹{(d.price || 0).toLocaleString("en-IN")}
+                    <small>/ person</small>
+                  </div>
+
+                  <button
+                    className="sb-book-btn"
+                    onClick={() => onBook(d)}
+                  >
+                    Book Now →
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       )}
     </div>
