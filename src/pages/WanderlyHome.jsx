@@ -11,7 +11,8 @@ export default function WanderlyHome() {
   // Fetch data
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-    fetch(`${API_URL}/destinations`)
+    //fetch(`${API_URL}/destinations`)
+    fetch(`${API.BASE}${API.DESTINATIONS}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("API DATA:", data);
