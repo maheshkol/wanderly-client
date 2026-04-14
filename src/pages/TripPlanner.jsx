@@ -361,7 +361,8 @@ export default function TripPlanner() {
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE}/destinations`)
+    //fetch(`${API_BASE}/destinations`)
+   fetch(`${API.BASE}${API.DESTINATIONS}`)
       .then(res => res.json())
       .then(data => {
         setDestinations(data);
