@@ -337,7 +337,8 @@ export default function DestinationDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE}/destinations/${id}`)
+    //fetch(`${API_BASE}/destinations/${id}`)
+   fetch(`${API.BASE}${API.DESTINATIONS}/${id}`)
       .then(res => res.json())
       .then(data => {
         setDestination(data);
