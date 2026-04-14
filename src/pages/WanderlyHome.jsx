@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import API from "../config";
 
 export default function WanderlyHome() {
   const navigate = useNavigate();
