@@ -1,4 +1,5 @@
 import API_BASE from '../config';
+import API from "../config";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
