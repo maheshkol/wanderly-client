@@ -408,7 +408,8 @@ function SearchResults({ onBook }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE}/destinations`)
+    //fetch(`${API_BASE}/destinations`)
+   fetch(`${API.BASE}${API.DESTINATIONS}/search?q=${query}`)
       .then(res => res.json())
       .then(data => {
         setDestinations(data);
