@@ -419,7 +419,7 @@ function SearchResults({ onBook }) {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [destinations]);
 
   return (
     <div className="sb-search-page">
